@@ -1,0 +1,12 @@
+ninja: Entering directory `/Users/jy/FindHookPoint/app/.cxx/cmake/debug/armeabi-v7a'
+[1/2] Building CXX object CMakeFiles/fha.dir/main.cpp.o
+In file included from /Users/jy/FindHookPoint/app/src/main/cpp/main.cpp:4:
+In file included from /Users/jy/FindHookPoint/app/src/main/cpp/include/LIEF/LIEF.hpp:22:
+In file included from /Users/jy/FindHookPoint/app/src/main/cpp/include/LIEF/OAT.hpp:22:
+In file included from /Users/jy/FindHookPoint/app/src/main/cpp/include/LIEF/OAT/Parser.hpp:24:
+In file included from /Users/jy/FindHookPoint/app/src/main/cpp/include/LIEF/BinaryStream/VectorStream.hpp:22:
+/Users/jy/FindHookPoint/app/src/main/cpp/include/LIEF/BinaryStream/BinaryStream.hpp:44:43: warning: implicit conversion from 'unsigned long long' to 'size_t' (aka 'unsigned int') changes value from 18446744073709551615 to 4294967295 [-Wconstant-conversion]
+  std::string read_mutf8(size_t maxsize = -1ull) const;
+                                        ~ ^~~~~
+1 warning generated.
+[2/2] Linking CXX shared library /Users/jy/FindHookPoint/app/build/intermediates/cmake/debug/obj/armeabi-v7a/libfha.so

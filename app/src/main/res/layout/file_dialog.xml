@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#302E2E"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/file_dialog_top"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/line">
+
+        <ImageButton
+            android:id="@+id/btnAddDir"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_folder_plus_white_24dp" />
+
+        <ImageButton
+            android:id="@+id/btn_sort"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/btnAddDir"
+            android:background="@drawable/ic_sort_name_white_24dp" />
+
+        <TextView
+            android:id="@+id/text_save_path"
+            android:layout_width="205dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/btn_sort"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="/sdcard/asdas.txt"
+            android:textColor="#fff" />
+
+        <ImageButton
+            android:id="@+id/btnFanHui"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_folder_upload_white_24dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/file_dialog_mid"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/file_dialog_top"
+        android:orientation="vertical"
+        android:weightSum="12">
+
+        <ListView
+            android:id="@+id/list_files"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></ListView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="11"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#00000000"
+                android:text="取消"
+                android:textColor="#fff" />
+
+            <Button
+                android:id="@+id/btnConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#00000000"
+                android:text="确定"
+                android:textColor="#fff" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

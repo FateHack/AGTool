@@ -1,0 +1,20 @@
+Executable : /Users/jy/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake
+arguments : 
+-H/Users/jy/FindHookPoint/app/src/main/cpp
+-B/Users/jy/FindHookPoint/app/.cxx/cmake/release/x86
+-DANDROID_ABI=x86
+-DANDROID_PLATFORM=android-24
+-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/Users/jy/FindHookPoint/app/build/intermediates/cmake/release/obj/x86
+-DCMAKE_BUILD_TYPE=Release
+-DANDROID_NDK=/Users/jy/Library/Android/sdk/ndk/21.0.6113669
+-DCMAKE_CXX_FLAGS=-std=c++11
+-DCMAKE_SYSTEM_NAME=Android
+-DCMAKE_ANDROID_ARCH_ABI=x86
+-DCMAKE_SYSTEM_VERSION=24
+-DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+-DCMAKE_ANDROID_NDK=/Users/jy/Library/Android/sdk/ndk/21.0.6113669
+-DCMAKE_TOOLCHAIN_FILE=/Users/jy/Library/Android/sdk/ndk/21.0.6113669/build/cmake/android.toolchain.cmake
+-G Ninja
+-DCMAKE_MAKE_PROGRAM=/Users/jy/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja
+jvmArgs : 
+

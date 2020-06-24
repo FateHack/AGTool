@@ -1,0 +1,42 @@
+{
+  "stringTable": {
+    "0": "/Users/jy/FindHookPoint/app/.cxx/cmake/debug/arm64-v8a",
+    "1": "--target=aarch64-none-linux-android24 --gcc-toolchain=/Users/jy/Library/Android/sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/jy/Library/Android/sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dfha_EXPORTS -I/Users/jy/FindHookPoint/app/src/main/cpp/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c++11 -O0 -fno-limit-debug-info -fPIC"
+  },
+  "buildFiles": [
+    "/Users/jy/Library/Android/sdk/ndk/21.0.6113669/build/cmake/platforms.cmake",
+    "/Users/jy/Library/Android/sdk/ndk/21.0.6113669/build/cmake/android.toolchain.cmake",
+    "/Users/jy/FindHookPoint/app/src/main/cpp/CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "/Users/jy/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Users/jy/FindHookPoint/app/.cxx/cmake/debug/arm64-v8a\" clean"
+  ],
+  "buildTargetsCommand": "/Users/jy/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Users/jy/FindHookPoint/app/.cxx/cmake/debug/arm64-v8a\" {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "fha-Debug-arm64-v8a": {
+      "buildCommand": "/Users/jy/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Users/jy/FindHookPoint/app/.cxx/cmake/debug/arm64-v8a\" fha",
+      "buildType": "debug",
+      "toolchain": "164275623",
+      "abi": "arm64-v8a",
+      "artifactName": "fha",
+      "files": [
+        {
+          "src": "/Users/jy/FindHookPoint/app/src/main/cpp/main.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        }
+      ],
+      "headers": [],
+      "output": "/Users/jy/FindHookPoint/app/build/intermediates/cmake/debug/obj/arm64-v8a/libfha.so"
+    }
+  },
+  "toolchains": {
+    "164275623": {
+      "cppCompilerExecutable": "/Users/jy/Library/Android/sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

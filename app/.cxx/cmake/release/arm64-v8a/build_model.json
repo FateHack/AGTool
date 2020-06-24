@@ -1,0 +1,72 @@
+{
+  "variant": {
+    "module": {
+      "rootBuildGradleFolder": "/Users/jy/FindHookPoint",
+      "sdkFolder": "/Users/jy/Library/Android/sdk",
+      "isNativeCompilerSettingsCacheEnabled": false,
+      "isBuildOnlyTargetAbiEnabled": true,
+      "splitsAbiFilterSet": [],
+      "intermediatesFolder": "/Users/jy/FindHookPoint/app/build/intermediates",
+      "gradleModulePathName": ":app",
+      "moduleRootFolder": "/Users/jy/FindHookPoint/app",
+      "makeFile": "/Users/jy/FindHookPoint/app/src/main/cpp/CMakeLists.txt",
+      "buildSystem": "CMAKE",
+      "compilerSettingsCacheFolder": "/Users/jy/FindHookPoint/.cxx",
+      "cxxFolder": "/Users/jy/FindHookPoint/app/.cxx",
+      "ndkFolder": "/Users/jy/Library/Android/sdk/ndk/21.0.6113669",
+      "ndkVersion": "21.0.6113669",
+      "ndkSupportedAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "ndkDefaultAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "cmakeToolchainFile": "."
+    },
+    "buildSystemArgumentList": [],
+    "cFlagList": [],
+    "cppFlagsList": [
+      "-std\u003dc++11"
+    ],
+    "variantName": "release",
+    "soFolder": "/Users/jy/FindHookPoint/app/build/intermediates/cmake/release/lib",
+    "objFolder": "/Users/jy/FindHookPoint/app/build/intermediates/cmake/release/obj",
+    "jsonFolder": "/Users/jy/FindHookPoint/app/.cxx/cmake/release",
+    "gradleBuildOutputFolder": "/Users/jy/FindHookPoint/app/.cxx/cxx/release",
+    "isDebuggableEnabled": false,
+    "validAbiList": [
+      "ARMEABI_V7A",
+      "ARM64_V8A",
+      "X86",
+      "X86_64"
+    ],
+    "buildTargetSet": []
+  },
+  "abi": "ARM64_V8A",
+  "abiPlatformVersion": 24,
+  "cxxBuildFolder": "/Users/jy/FindHookPoint/app/.cxx/cmake/release/arm64-v8a",
+  "jsonFile": "/Users/jy/FindHookPoint/app/.cxx/cmake/release/arm64-v8a/android_gradle_build.json",
+  "gradleBuildOutputFolder": "/Users/jy/FindHookPoint/app/.cxx/cxx/release/arm64-v8a",
+  "objFolder": "/Users/jy/FindHookPoint/app/build/intermediates/cmake/release/obj/arm64-v8a",
+  "buildCommandFile": "/Users/jy/FindHookPoint/app/.cxx/cmake/release/arm64-v8a/build_command.txt",
+  "buildOutputFile": "/Users/jy/FindHookPoint/app/.cxx/cmake/release/arm64-v8a/build_output.txt",
+  "modelOutputFile": "/Users/jy/FindHookPoint/app/.cxx/cmake/release/arm64-v8a/build_model.json",
+  "cmake": {
+    "cmakeListsWrapperFile": "/Users/jy/FindHookPoint/app/.cxx/cxx/release/arm64-v8a/CMakeLists.txt",
+    "toolchainWrapperFile": "/Users/jy/FindHookPoint/app/.cxx/cxx/release/arm64-v8a/android_gradle_build.toolchain.cmake",
+    "buildGenerationStateFile": "/Users/jy/FindHookPoint/app/.cxx/cxx/release/arm64-v8a/build_generation_state.json",
+    "cacheKeyFile": "/Users/jy/FindHookPoint/app/.cxx/cxx/release/arm64-v8a/compiler_cache_key.json",
+    "compilerCacheUseFile": "/Users/jy/FindHookPoint/app/.cxx/cxx/release/arm64-v8a/compiler_cache_use.json",
+    "compilerCacheWriteFile": "/Users/jy/FindHookPoint/app/.cxx/cxx/release/arm64-v8a/compiler_cache_write.json",
+    "toolchainSettingsFromCacheFile": "/Users/jy/FindHookPoint/app/.cxx/cxx/release/arm64-v8a/compiler_settings_cache.cmake",
+    "cmakeWrappingBaseFolder": "."
+  },
+  "jsonGenerationLoggingRecordFile": "/Users/jy/FindHookPoint/app/.cxx/cmake/release/arm64-v8a/json_generation_record.json",
+  "compileCommandsJsonFile": "/Users/jy/FindHookPoint/app/.cxx/cmake/release/arm64-v8a/compile_commands.json"
+}
