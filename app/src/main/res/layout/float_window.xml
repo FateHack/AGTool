@@ -3,6 +3,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:background="#CE030303"
     android:orientation="vertical">
 
@@ -51,7 +53,7 @@
                 android:layout_toRightOf="@id/btnDeault"
                 android:layout_weight="2"
                 android:background="@drawable/image_selector"
-                android:src="@drawable/ico_acc" />
+                android:src="@drawable/ic_patch" />
 
             <ImageButton
                 android:id="@+id/btnEsc"
@@ -237,13 +239,16 @@
         android:layout_below="@+id/maintop"
         android:visibility="gone">
 
-        <ImageButton
+        <Button
             android:id="@+id/btn_inject_open"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/ripple_bg"
             android:layout_centerVertical="true"
-            android:src="@drawable/ico_open" />
+            android:textColor="#fff"
+            android:text="注入SO"
+             />
         <!--        <TextView-->
         <!--            android:layout_width="match_parent"-->
         <!--            android:layout_height="match_parent"-->
@@ -258,30 +263,34 @@
 
 
     <!--    加速页面-->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/mainmid_acc"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_below="@+id/maintop"
+        android:orientation="vertical"
         android:visibility="gone">
 
-        <EditText
-            android:id="@+id/et_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:hint="输入"
-            android:inputType="text"
-            android:textColorHint="#fff" />
-
-        <TextView
+        <ListView
+            android:id="@+id/mod_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:text="加速页面"
-            android:textColor="#fff" />
-    </RelativeLayout>
+            android:transcriptMode="normal"
+            android:layout_weight="5" />
+<!--        <Button-->
+<!--            android:id="@+id/btn_addMod"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="+"/>-->
+
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:gravity="center"-->
+<!--            android:text="加速页面"-->
+<!--            android:textColor="#fff" />-->
+    </LinearLayout>
 
 
 </RelativeLayout>

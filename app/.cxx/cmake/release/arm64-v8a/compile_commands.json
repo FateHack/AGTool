@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/Users/jy/FindHookPoint/app/.cxx/cmake/release/arm64-v8a",
-  "command": "/Users/jy/Library/Android/sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android24 --gcc-toolchain=/Users/jy/Library/Android/sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/jy/Library/Android/sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/darwin-x86_64/sysroot  -Dfha_EXPORTS -I/Users/jy/FindHookPoint/app/src/main/cpp/include  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++11 -O2 -DNDEBUG  -fPIC   -o CMakeFiles/fha.dir/main.cpp.o -c /Users/jy/FindHookPoint/app/src/main/cpp/main.cpp",
-  "file": "/Users/jy/FindHookPoint/app/src/main/cpp/main.cpp"
-}
-]

@@ -22,7 +22,7 @@ public class FloatingManager {
 
     private FloatingManager(Context context) {
         mContext = context;
-        mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);//获得WindowManager对象
+        mWindowManager = (WindowManager) mContext.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);//获得WindowManager对象，要用Application
     }
 
     /**

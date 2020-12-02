@@ -219,6 +219,15 @@ public class MyService extends Service {
         return result;
     }
 
+    public static void removeFile(String path) {
+        execRootCmdSilent("rm -rf " + path);
+    }
+
+    public static void moveFile(String src, String tar) {
+        execRootCmdSilent("mv " + src + " " + tar);
+    }
+
+
     /**
      * 执行命令但不关注结果输出
      */

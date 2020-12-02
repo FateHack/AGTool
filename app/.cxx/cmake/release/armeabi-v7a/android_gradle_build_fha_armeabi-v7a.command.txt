@@ -1,7 +1,0 @@
-Executable : /Users/jy/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja
-arguments : 
--C
-/Users/jy/FindHookPoint/app/.cxx/cmake/release/armeabi-v7a
-fha
-jvmArgs : 
-

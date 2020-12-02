@@ -50,17 +50,19 @@ public class FloatingView extends FrameLayout {
 
         mkDirLayout = LayoutInflater.from(context).inflate(R.layout.mkdir_dialog, null);
 
-        MainActivity.btnMkdirCancel=mkDirLayout.findViewById(R.id.btnMkdirCancel);
+        MainActivity.btnMkdirCancel = mkDirLayout.findViewById(R.id.btnMkdirCancel);
 
-        MainActivity.btnMkdirConfirm=mkDirLayout.findViewById(R.id.btnMkdirConfirm);
+        MainActivity.btnMkdirConfirm = mkDirLayout.findViewById(R.id.btnMkdirConfirm);
 
-        MainActivity.mkDirName=mkDirLayout.findViewById(R.id.mkDirName);
+        MainActivity.mkDirName = mkDirLayout.findViewById(R.id.mkDirName);
 
-        MainActivity.currentPath=mkDirLayout.findViewById(R.id.currentPath);
+        MainActivity.currentPath = mkDirLayout.findViewById(R.id.currentPath);
 
         FloatingView.alertDialog = FloatingView.builder.create();
         fileDialog = new AlertDialog.Builder(context).create();
         mkDirDialog = new AlertDialog.Builder(context).create();
+
+
     }
 
     public void show() {

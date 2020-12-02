@@ -1,8 +1,0 @@
-ninja: Entering directory `/Users/jy/FindHookPoint/app/.cxx/cmake/debug/arm64-v8a'
-[1/2] Building CXX object CMakeFiles/fha.dir/main.cpp.o
-[2/2] Linking CXX shared library /Users/jy/FindHookPoint/app/build/intermediates/cmake/debug/obj/arm64-v8a/libfha.so
-FAILED: /Users/jy/FindHookPoint/app/build/intermediates/cmake/debug/obj/arm64-v8a/libfha.so 
-: && /Users/jy/Library/Android/sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android24 --gcc-toolchain=/Users/jy/Library/Android/sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/jy/Library/Android/sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -fPIC -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++11 -O0 -fno-limit-debug-info  -Wl,--exclude-libs,libgcc_real.a -Wl,--exclude-libs,libatomic.a -static-libstdc++ -Wl,--build-id -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments -shared -Wl,-soname,libfha.so -o /Users/jy/FindHookPoint/app/build/intermediates/cmake/debug/obj/arm64-v8a/libfha.so CMakeFiles/fha.dir/main.cpp.o  /Users/jy/FindHookPoint/app/src/main/cpp/lib/libLIEF.a -llog -latomic -lm && :
-/Users/jy/FindHookPoint/app/src/main/cpp/lib/libLIEF.a: error adding symbols: File in wrong format
-clang++: error: linker command failed with exit code 1 (use -v to see invocation)
-ninja: build stopped: subcommand failed.

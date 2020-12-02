@@ -10,6 +10,7 @@ import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -20,8 +21,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.FileObserver;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -55,7 +59,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -165,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static int port = 0;
 
-    private ImageButton btn_inject_open;
+    private Button btn_inject_open;
 
     private String inject_so_path;
 
@@ -179,10 +182,23 @@ public class MainActivity extends AppCompatActivity {
 
     public static TextView currentPath;
 
+    public static ListView mod_list;
+
     public boolean isDumping = false;
 
+    public Button btn_addMod;
 
-    public native void inject(String soPath, String target);
+    public List<ModItem> modItems = new ArrayList<>();
+
+    private SharedPreferences preferences;
+
+    private SharedPreferences.Editor editor;
+
+    // 定义变量，记录刷新前获得焦点的EditText所在的位置
+    private int mCurrentTouchedIndex = -1;
+    // 定义变量，记录刷新前获得焦点的EditText所在的位置
+    private int mCurrentTouchedID = -1;
+
 
     enum SENDTYPE {
         DUMPSO,
@@ -191,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     SENDTYPE sendtype;
-    TestFileObserver ts;
+//    TestFileObserver ts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,21 +217,20 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        MyService.haveRoot();
         verifyStoragePermissions(this); //读写权限
         CheckFloatViewPermission(); //悬浮窗权限
+        MyService.haveRoot();
+        startService(new Intent(getBaseContext(), MyService.class).putExtra(MyService.ACTION, MyService.START));
         new Thread(new Runnable() {  //获取应用列表app信息
             @Override
             public void run() {
                 getAppList();
             }
         }).start();
-
         //随机数作为端口
         int max = 8000, min = 9000;
         port = (int) (Math.random() * (max - min) + min);
 
-        startService(new Intent(getBaseContext(), MyService.class).putExtra(MyService.ACTION, MyService.START));
 
         //先启动服务 初始化mView
         Intent intent = new Intent(getApplicationContext(), FloatingService.class);
@@ -224,11 +239,16 @@ public class MainActivity extends AppCompatActivity {
         //设置窗口参数
         showMain();
 
+        if (!new File("/sdcard/AGTool").exists()) {
+            new File("/sdcard/AGTool").mkdir();
+        }
+
         btnFloat = (Button) findViewById(R.id.btnFloat);
         btnFloat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (btnFloat.getText().toString().equals("开启")) {
+
                     showImageButton();
                     Intent home = new Intent(Intent.ACTION_MAIN);
                     home.addCategory(Intent.CATEGORY_HOME);
@@ -250,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
         mparam = new WindowManager.LayoutParams();
         mparam.x = 100;
         mparam.y = 0;
-        dirPath = "/sdcard";
+        dirPath = "/sdcard/AGTool";
         saveAddrPath = dirPath;
 
     }
@@ -278,6 +298,7 @@ public class MainActivity extends AppCompatActivity {
         btnInject = (ImageButton) FloatingView.mView.findViewById(R.id.btnInject);
         btnDefault = (ImageButton) FloatingView.mView.findViewById(R.id.btnDeault);
         addrList = (ListView) FloatingView.mView.findViewById(R.id.addrList);
+        mod_list = (ListView) FloatingView.mView.findViewById(R.id.mod_list);
         hideBth = (ImageButton) FloatingView.mView.findViewById(R.id.hideBtn);
         text_process = (TextView) FloatingView.mView.findViewById(R.id.text_process);
         progressBar = (ProgressBar) FloatingView.mView.findViewById(R.id.progress_bar_h);
@@ -286,6 +307,10 @@ public class MainActivity extends AppCompatActivity {
         final View mid_esc = FloatingView.mView.findViewById(R.id.mainmid_esc);
         final View mid_inject = FloatingView.mView.findViewById(R.id.mainmid_inject);
         final View mid_acc = FloatingView.mView.findViewById(R.id.mainmid_acc);
+
+        preferences = getSharedPreferences("modItems", MODE_PRIVATE);
+        editor = preferences.edit();
+
         btnDefault.setBackgroundResource(R.drawable.mainbtn_pressed);
         btnFindHook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -299,6 +324,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         btnDump.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -369,13 +395,27 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 if (selectProcess != null) {
                                     //sendInjectSo(selectProcess.getPid(), inject_so_path);
-                                    copyFile(inject_so_path, "/data/data/" + selectProcess.getPackageName() + "/lib/"); //移动注入的so进lib目录
-                                    String soname = "/data/data/" + selectProcess.getPackageName() + "/lib/" + selectSoName;//获取目标so的路径
-                                    inject_so_path = inject_so_path.substring(inject_so_path.lastIndexOf('/') + 1); //获取注入so的名称
-                                    inject(inject_so_path, soname); //注入so
-                                    mvFile(soname, soname.replace(".so", "_bak.so")); //备份原来的so
-                                    String mod_libPath = "/sdcard/" + soname.substring(soname.lastIndexOf('/') + 1); //获取修改后的so路径
-                                    mvFile(mod_libPath, soname); //移动修改后的so到目标lib目录
+                                    String target_path = "/data/app/" + new File(inject_so_path).getName();
+                                    copyFile(inject_so_path, target_path);
+                                    MyService.execRootCmdSilent("chmod 777 " + target_path);
+                                    FileOutputStream fos = null;
+                                    try {
+                                        fos = new FileOutputStream("/sdcard/Path");
+                                        fos.write((target_path.getBytes()));
+                                        fos.close();
+                                        MyService.moveFile("/sdcard/Path", "/data/local/tmp/Path");
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                MyService.execRootCmdSilent("/data/local/tmp/fi -f " + selectProcess.getPackageName() + " -s /data/local/tmp/open.js -e");
+                                            }
+                                        }, 100);
+
+                                    } catch (FileNotFoundException e) {
+                                        e.printStackTrace();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
 
                                 } else {
                                     Toast.makeText(getBaseContext(), "请选择进程", Toast.LENGTH_SHORT).show();
@@ -458,6 +498,7 @@ public class MainActivity extends AppCompatActivity {
                 if (mid_acc.getVisibility() == View.GONE) {
                     mid_acc.setVisibility(android.view.View.VISIBLE);
                 }
+
                 v.setBackgroundResource(R.drawable.mainbtn_pressed);
                 btnDefault.setBackgroundResource(R.drawable.mainbt);
                 btnEsc.setBackgroundResource(R.drawable.mainbt);
@@ -481,22 +522,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //监视文件
-    class TestFileObserver extends FileObserver {
-
-        // path 为 需要监听的文件或文件夹
-        public TestFileObserver(String path) {
-            super(path, FileObserver.ALL_EVENTS);
-        }
-
-        @Override
-        public void onEvent(int event, String path) {
-            // 如果文件修改了 打印出文件相对监听文件夹的位置
-            if (event == FileObserver.MODIFY) {
-                Log.d("Fuck", "被修改");
-            }
-        }
-    }
+//    //监视文件
+//    class TestFileObserver extends FileObserver {
+//
+//        // path 为 需要监听的文件或文件夹
+//        public TestFileObserver(String path) {
+//            super(path, FileObserver.ALL_EVENTS);
+//        }
+//
+//        @Override
+//        public void onEvent(int event, String path) {
+//            // 如果文件修改了 打印出文件相对监听文件夹的位置
+//            if (event == FileObserver.MODIFY) {
+//                Log.d("Fuck", "被修改");
+//            }
+//        }
+//    }
 
     class FileThread extends Thread {
         @Override
@@ -724,7 +765,7 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingView.mParams.format = PixelFormat.RGBA_8888;
         FloatingView.mParams.gravity = Gravity.LEFT;
-        FloatingView.mParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        FloatingView.mParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;  //可用输入法
         FloatingView.mParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         //宽度
         FloatingView.mParams.height = WindowManager.LayoutParams.MATCH_PARENT;
@@ -946,6 +987,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                     progressBar.setProgress(progress);
 
+                } else if (msg.contains("mod:")) {
+                    String[] splt = msg.split(":");
+                    if (preferences.getString(splt[1], null) == null) {
+                        editor.putString(splt[1], splt[2]);
+                        editor.commit();
+                    }
                 }
             }
         });
@@ -965,11 +1012,18 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectProcess = new Process(processes.get(position));
                 addrList.setAdapter(null);
+                modItems.clear();
+                mod_list.setAdapter(null);
+                modItems.add(new ModItem("X", "X", "请点击 + "));
+                mod_list.setAdapter(new ModAdapter());
                 progressBar.setProgress(0);
                 text_process.setText("[" + selectProcess.getPid() + "] " + selectProcess.getAppName());
                 btnCP.setBackground(selectProcess.getIcon());
                 sendGetAllSo(selectProcess.getPid());
                 FloatingView.alertDialog.dismiss();
+
+                editor.clear().commit();
+
             }
         });
     }
@@ -1020,7 +1074,7 @@ public class MainActivity extends AppCompatActivity {
                     if (file.isFile()) {
                         fileIndex = position;
                         inject_so_path = current;
-                        //  Toast.makeText(getBaseContext(), "已选择" + current, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "已选择" + current, Toast.LENGTH_SHORT).show();
                     } else {
                         dirPath += alldir.get(position);
                         showALlFile(listView, text_save_path);
@@ -1032,8 +1086,9 @@ public class MainActivity extends AppCompatActivity {
                     if (file.isFile()) {
                         fileIndex = position;
                         inject_so_path = current;
+                        Toast.makeText(getBaseContext(), "已选择" + current, Toast.LENGTH_SHORT).show();
 
-                        // Toast.makeText(getBaseContext(), "已选择" + current, Toast.LENGTH_SHORT).show();
+
                     } else {
                         dirPath = dirPath + "/" + alldir.get(position);
                         showALlFile(listView, text_save_path);
@@ -1107,6 +1162,12 @@ public class MainActivity extends AppCompatActivity {
         sendMessage(message);
     }
 
+    private void sendMod(ModItem modItem) {
+        String new_code = modItem.getCode().replaceAll(" ", "");
+        String message = "4\t" + modItem.getPid() + "\t" + modItem.getSelectSoName() + "\t" + modItem.getOffset() + "\t" + new_code;
+        sendMessage(message);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -1147,6 +1208,153 @@ public class MainActivity extends AppCompatActivity {
                 appIcon.setImageDrawable(processes.get(position).getIcon());
             } else {
                 appIcon.setImageResource(R.drawable.ic_launcher_background);
+            }
+            return itemView;
+        }
+    }
+
+    private class OnEditTextTouched implements View.OnTouchListener {
+        private int position;
+
+        public OnEditTextTouched(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                mCurrentTouchedIndex = position;
+                mCurrentTouchedID = v.getId();
+            }
+            return false;
+        }
+    }
+
+    class ModAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return modItems.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return modItems.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.mod_item, null);
+            TextView sltSo = itemView.findViewById(R.id.selectSO);
+            TextView tt_index = itemView.findViewById(R.id.tt_index);
+            tt_index.setText("" + position);
+            sltSo.setText(modItems.get(position).getSelectSoName());
+            btn_addMod = itemView.findViewById(R.id.btn_addMod);
+            btn_addMod.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if ("".equals(selectSoName) || selectSoName == null) {
+                        Toast.makeText(getBaseContext(), "请选择so", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        modItems.add(new ModItem(selectSoName, "", ""));
+                        mod_list.setAdapter(new ModAdapter());
+                    }
+
+                }
+            });
+
+            EditText et_offset = itemView.findViewById(R.id.et_offset);
+            EditText et_code = itemView.findViewById(R.id.et_code);
+            et_offset.setText(modItems.get(position).getOffset());
+            et_offset.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    modItems.get(position).setOffset(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+            et_code.setText(modItems.get(position).getCode());
+            et_code.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    modItems.get(position).setCode(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+            et_offset.setOnTouchListener(new OnEditTextTouched(position));
+            et_code.setOnTouchListener(new OnEditTextTouched(position));
+            if (position == mCurrentTouchedIndex) {
+                if (mCurrentTouchedID == R.id.et_code) {
+                    et_code.requestFocus();
+                } else if (mCurrentTouchedID == R.id.et_offset) {
+                    et_offset.requestFocus();
+                }
+            }
+            Button btn_mod = itemView.findViewById(R.id.btn_mod);
+            Button btn_restore = itemView.findViewById(R.id.btn_restore);
+            btn_restore.setVisibility(View.INVISIBLE);
+            ImageButton btn_del = itemView.findViewById(R.id.btn_del);
+            btn_mod.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    if (offset == null || code == null || selectSoName == null) {
+//                        Toast.makeText(itemView.getContext(), "输入有误请检查", Toast.LENGTH_SHORT).show();
+//                    }
+                    String offset = et_offset.getText().toString();  //获取输入的偏移地址
+                    String code = et_code.getText().toString(); //获取输入的指令code
+                    sendMod(new ModItem(selectSoName, offset, code, selectProcess.getPid()));
+
+                }
+            });
+            btn_restore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String offset = et_offset.getText().toString();
+                    String backupCode = preferences.getString(offset, null);
+                    Log.d("AGTool","backupcode:"+backupCode);
+                    if (null != backupCode) {
+                        sendMod(new ModItem(selectSoName, offset, backupCode, selectProcess.getPid()));
+                    }
+                }
+            });
+            btn_del.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    modItems.remove(position);
+                    mod_list.setAdapter(new ModAdapter());
+
+                }
+            });
+
+
+            if (position != getCount() - 1) {
+                btn_addMod.setVisibility(View.INVISIBLE);
             }
             return itemView;
         }

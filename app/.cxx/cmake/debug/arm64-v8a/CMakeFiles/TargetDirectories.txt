@@ -1,3 +1,0 @@
-/Users/jy/FindHookPoint/app/.cxx/cmake/debug/arm64-v8a/CMakeFiles/rebuild_cache.dir
-/Users/jy/FindHookPoint/app/.cxx/cmake/debug/arm64-v8a/CMakeFiles/edit_cache.dir
-/Users/jy/FindHookPoint/app/.cxx/cmake/debug/arm64-v8a/CMakeFiles/fha.dir

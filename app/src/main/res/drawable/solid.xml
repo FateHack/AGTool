@@ -1,6 +1,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
     <!-- 主体背景颜色值 -->
-        <solid android:color="#330E0303" />
+        <solid android:color="#400C0101" />
     <!-- 连框宽度和颜色值 -->
 <!--    <stroke-->
 <!--        android:width="0.01dp"-->

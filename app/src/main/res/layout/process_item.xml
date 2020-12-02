@@ -11,26 +11,28 @@
 
         <ImageView
             android:id="@+id/appIcon"
-            android:layout_gravity="center"
             android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:layout_gravity="center" />
+
         <TextView
             android:id="@+id/appPid"
-            android:textColor="#03A9F4"
-            android:layout_marginLeft="12dp"
-            android:text="[11000]"
-            android:gravity="center"
-            android:textSize="50px"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
+            android:gravity="center"
+            android:text="[11000]"
+            android:textColor="#03A9F4"
+            android:textSize="50px" />
+
         <TextView
             android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginLeft="12dp"
             android:textColor="#fff"
-            android:textSize="50px"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="50px" />
     </LinearLayout>
 
 </RelativeLayout>
