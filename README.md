@@ -28,7 +28,7 @@
 
 - 界面功能说明
 
-![DIlIaR.png](https://s3.ax1x.com/2020/12/02/DIlIaR.png)](https://imgchr.com/i/DIlIaR)
+![DIlIaR.png](https://s3.ax1x.com/2020/12/02/DIlIaR.png)]
 
 - 扫描inlinehook 地址
 
